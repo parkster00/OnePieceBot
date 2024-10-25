@@ -2,6 +2,7 @@ from atproto import Client
 from pathlib import Path
 import time
 import os, os.path
+import pickle
 
 client = Client()
 client.login('everyonepieceframe.bsky.social', 'Store-Cast-0952')
@@ -37,21 +38,26 @@ def countEps(folder_dir):
 
 def main():
 
-    # adminMenu()
 
-    # global episode
-    # global currentFrame
+    try:   
+        # Getting back the objects:
+        with open('OnePieceBot/objs.pkl', 'rb') as f:  # Python 3: open(..., 'rb')
+            Episode, Frame = pickle.load(f)
+    except:
+        print("Couldn't pickle")
 
     while (True):
-        for i in range(2, 1123):
+        for i in range(Episode, 1123):
             folder_dir = f'OnePieceBot/One Piece Frames/E{i}' # Change so that the season folder is removed, unnecessary and overcomplicated
             frameNum = countEps(folder_dir)
-            for j in range(0, frameNum+1):
+            for j in range(Frame, frameNum+1):
                 try:
                     with open(f"OnePieceBot/One Piece Frames/E{i}/OnePieceFrame ({j}).jpeg", 'rb') as f:
                         img_data = f.read()
                         client.send_image(text=f'One Piece Episode {i} Frame ({j}/{frameNum})', image=img_data, image_alt=f'One Piece Episode {i} Frame ({j}/{frameNum})')
                         print(f"Frame {j} out of {frameNum} has been posted!")
+                        with open('OnePieceBot/objs.pkl', 'wb') as f:  # Python 3: open(..., 'wb')
+                            pickle.dump([i, j+1], f)
                         time.sleep(300) # Change back to 900 after testing
                     
                 except:
