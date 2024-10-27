@@ -25,13 +25,14 @@ def countEps(folder_dir):
             count += 1
     return count
 
-def save_values(input_value, filename):
+def save_values(input_value_1, input_value_2, filename):
     with open(file_name, 'w') as f:
-        f.write(str(input_value))
+        f.write(str(f"{input_value_1},{input_value_2}"))
 
 def load_value(filename):
     with open(filename, 'r') as f:
-        read = int(f.read())
+        read = []
+        read = f.read().split(",")
         return read
 
 
@@ -49,27 +50,20 @@ def load_value(filename):
 
 def main():
 
-    # print(call_api())
-
-    try:
-        values = ast.literal_eval(load_value(file_name))
-
-    except:
-        values = {}
+    values = load_value(file_name)
 
     while (True):
-        for i in range(2, 1123):
-            save_values(i, file_name)
+        for i in range(int(values[0]), 1123):
             folder_dir = f'One Piece Frames/E{i}' # Change so that the season folder is removed, unnecessary and overcomplicated
             frameNum = countEps(folder_dir)
-            for j in range(321, frameNum+1):
+            for j in range(int(values[1]), frameNum+1):
                 try:
                     with open(f"One Piece Frames/E{i}/OnePieceFrame ({j}).jpeg", 'rb') as f:
                         img_data = f.read()
                         client.send_image(text=f'One Piece Episode {i} Frame ({j}/{frameNum})', image=img_data, image_alt=f'One Piece Episode {i} Frame ({j}/{frameNum})')
                         print(f"Frame {j} out of {frameNum} has been posted!")
-                        save_values(j, file_name)
-                        time.sleep(300) # Change back to 900 after testing
+                        save_values(i, j+1, file_name)
+                        time.sleep(5) # Change back to 300 after testing
                     
                 except:
                     print("Error has occurred")
