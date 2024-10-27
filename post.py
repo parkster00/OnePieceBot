@@ -28,11 +28,11 @@ def countEps(folder_dir):
 
 def save_values(input_value, filename):
     with open(file_name, 'w') as f:
-        f.write(input_value)
+        f.write(str(input_value))
 
 def load_value(filename):
     with open(filename, 'r') as f:
-        read = f.read()
+        read = int(f.read())
         return read
 
 
@@ -48,18 +48,18 @@ def load_value(filename):
 #     print("Thanks! One moment while I start the bot...")
 #     #time.sleep(5)
 
-@limits(calls=15, period=900)
-def call_api(url):
-    response = requests.get(url)
+# @limits(calls=15, period=900)
+# def call_api(url):
+#     response = requests.get(url)
 
-    if response.status_code != 200:
-        raise Exception('API response: {}'.format(response.status_code))
-    return response
+#     if response.status_code != 200:
+#         raise Exception('API response: {}'.format(response.status_code))
+#     return response
 
 
 def main():
 
-    print(call_api())
+    # print(call_api())
 
     try:
         values = ast.literal_eval(load_value(file_name))
@@ -70,11 +70,11 @@ def main():
     while (True):
         for i in range(2, 1123):
             save_values(i, file_name)
-            folder_dir = f'OnePieceBot/One Piece Frames/E{i}' # Change so that the season folder is removed, unnecessary and overcomplicated
+            folder_dir = f'One Piece Frames/E{i}' # Change so that the season folder is removed, unnecessary and overcomplicated
             frameNum = countEps(folder_dir)
             for j in range(321, frameNum+1):
                 try:
-                    with open(f"OnePieceBot/One Piece Frames/E{i}/OnePieceFrame ({j}).jpeg", 'rb') as f:
+                    with open(f"One Piece Frames/E{i}/OnePieceFrame ({j}).jpeg", 'rb') as f:
                         img_data = f.read()
                         client.send_image(text=f'One Piece Episode {i} Frame ({j}/{frameNum})', image=img_data, image_alt=f'One Piece Episode {i} Frame ({j}/{frameNum})')
                         print(f"Frame {j} out of {frameNum} has been posted!")
