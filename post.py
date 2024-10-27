@@ -4,7 +4,6 @@ import time
 import os, os.path
 import pickle
 import ast
-from ratelimit import limits
 import requests
 
 client = Client()
@@ -47,15 +46,6 @@ def load_value(filename):
 #     #folder_dir = f'One Piece Frames/E{episode}/'
 #     print("Thanks! One moment while I start the bot...")
 #     #time.sleep(5)
-
-# @limits(calls=15, period=900)
-# def call_api(url):
-#     response = requests.get(url)
-
-#     if response.status_code != 200:
-#         raise Exception('API response: {}'.format(response.status_code))
-#     return response
-
 
 def main():
 
