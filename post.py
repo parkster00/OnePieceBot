@@ -63,7 +63,7 @@ def main():
                         client.send_image(text=f'One Piece Episode {i} Frame ({j}/{frameNum})', image=img_data, image_alt=f'One Piece Episode {i} Frame ({j}/{frameNum})')
                         print(f"Frame {j} out of {frameNum} has been posted!")
                         save_values(i, j+1, file_name)
-                        time.sleep(300) # Change back to 300 after testing
+                        time.sleep(450) # Change back to 300 after testing
                     
                 except:
                     print("Error has occurred")
