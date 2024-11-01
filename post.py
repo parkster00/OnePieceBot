@@ -54,6 +54,9 @@ def main():
 
     while (True):
         for i in range(int(values[0]), 1123):
+
+            values = load_value(file_name)
+
             folder_dir = f'One Piece Frames/E{i}' # Change so that the season folder is removed, unnecessary and overcomplicated
             frameNum = countEps(folder_dir)
             for j in range(int(values[1]), frameNum+1):
@@ -70,7 +73,6 @@ def main():
                     time.sleep(60)
                 
                 
-            open("values.txt", "w").write("")
-            save_values(i+1,1,file_name)
+            save_values(i, "1", file_name)
 
 main()
